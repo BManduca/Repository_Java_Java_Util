@@ -1,0 +1,28 @@
+package br.com.bytebank.banco.test;
+
+public class Teste {
+	
+	//array -> []
+	public static void main(String[] args) {
+		
+		/*
+		 * Arrays
+		 * -> int idades[] ou int[] idades
+		 * */
+		
+		//o array inicializa cada posicao com 0
+		int idades[] = new int[5];
+		
+		idades[0] = 29;
+		idades[1] = 15;
+		idades[2] = 40;
+		idades[3] = 60;
+		idades[4] = 85;
+		int idade4 = idades[4];
+		
+		System.out.println("Idade4 = " + idade4);
+		System.out.println(idades.length);
+				
+	}
+
+}

@@ -1,0 +1,45 @@
+
+public class EditorVideo extends Funcionario{
+
+	private int senha;
+	
+	public void setSenha(int senha) {
+		this.senha = senha;
+	}
+	
+	
+	public boolean autentica(int senha) {
+		
+		if (this.senha == senha) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	//utilizando modificador public, para que o método tenha visibilidade pública
+	//bonificação para gerente é o próprio valor do salário.
+	/*
+	 * Em determinado momento a bonificação do Gerente muda para 
+	 * o ganho padrão mais um salario, como resolver essa questão?
+	 * */
+	public double getBonificacao() {
+		//return super.salario;
+		/*
+		 * se fizermos return (this.salario * 0.1) + this.salario;
+		 * ate pode reasolver por momento, mas e se le na classe Funcionario
+		 * alterar a bonificação... aqui tambem vai mudar? Não!!
+		 * 
+		 * por isso, devemos herdar a chamada do metodo da classe mae e fazer 
+		 * a partir dai a conta da bonificação do Gerente
+		 * 
+		 * para melhorar a escrita do nosso codigo e evitar esse mal uso
+		 * 
+		 * faremos novamente referencia a super classe e chamaremos 
+		 * o proprio metodo para retornar o salario
+		 * */
+		return super.getBonificacao() + super.getSalario();
+	}
+
+}

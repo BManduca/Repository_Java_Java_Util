@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;bytebank-herdado-conta/src/br/com/bytebank/banco/test/util/Teste.java&apos; to &apos;TesteWrapperInteger.java&apos;" description="Rename resource &apos;Teste.java&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/br/com/bytebank/banco/test/util/Teste.java" name="TesteWrapperInteger.java" stamp="1617276868726" updateReferences="true"/>
+</session>

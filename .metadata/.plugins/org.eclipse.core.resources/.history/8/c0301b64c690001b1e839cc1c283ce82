@@ -1,0 +1,34 @@
+package br.com.bytebank.banco.test.util;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Teste {
+
+	public static void main(String[] args) {
+		
+		//criando um array do tipo int, primitivo, onde utilizamos os colchetes ([]), 
+		//da seguinte forma:
+		int[] idades = new int[5]; //tamanho fixo
+		
+		/*
+		 *variável armazenando um valor primitivo
+		 *ao armazenar este valor em uma lista, surgirá um problema, a lista só é capaz de
+		 *guardar referências.
+		 *Ao chamarmos o método add(), veremos que o Eclipse mostra que ele já
+		 *espera receber uma referência do tipo Object, ou seja, se tentarmos
+		 *adicionar o primitivo idade, não deverá funcionar, porque idade 
+		 *não é uma referência, logo, não é compatível com o tipo Object 
+		 * */
+		int idade = 29;
+		
+		//listas -> utilizado a interface List -> importar java.util
+		List numeros = new ArrayList();
+		
+		
+		//array de referências - é utilizado a classe como tipo
+		String[] nomes = new String[5];
+		
+	}
+
+}

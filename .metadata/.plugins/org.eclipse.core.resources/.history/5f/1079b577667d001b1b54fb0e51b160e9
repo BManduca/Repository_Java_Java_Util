@@ -1,0 +1,746 @@
+Para inicar o curso, criamos um novo projeto e dentro deste 
+projeto, uma nova classe chamada Fluxo:
+
+public class Fluxo {
+
+    public static void main(String[] args) {
+        System.out.println("Ini do main");
+        metodo1();
+        System.out.println("Fim do main");
+    }
+
+    private static void metodo1() {
+        System.out.println("Ini do metodo1");
+        metodo2();
+        System.out.println("Fim do metodo1");
+    }
+
+    private static void metodo2() {
+        System.out.println("Ini do metodo2");
+        for(int i = 1; i <= 5; i++) {
+            System.out.println(i);
+        }
+        System.out.println("Fim do metodo2");
+    }
+}
+
+ao executar noso projeto, no console aparecerá:
+ - "Ini do main", chamando logo em seguida e acessando o metodo1();
+ - "Ini do metodo1", chamando logo em seguida e acessando o metodo2();
+ - "Ini do metodo 2", que na sequência, será executado um laço de repetição, no qual a 
+ variável i começa em 1 e vai até 5. Essa mensagem será exibida até o final do laço.
+
+Para cada finalização de execução do método, será impresso uma mensagem de conclusão, na seguinte ordem:
+ - Fim do metodo2;
+ - Fim do metodo1;
+ - Fim do main;
+
+
+Ate o momento podemos reparar que não temos orientação a objetos, mas independente do 
+paradigma de programação, usamos uma pilha de execução. 
+
+para entendermos melhor:
+Um programa Java sempre começa no metodo main(). A pilha ou stach existe para organizar 
+a execução do código, lembrando que ainda precisa ser executado.
+
+O Java sempre irá procurar primeiro pelo método main(). Depois, ele cria a pilha e coloca o bloco
+de código dentro de outro, na pilha. Em seguida, o código do método1() é inserido na pilha
+
+** A pilha existe para executar algo e lembrar o que ainda precisa ser executado.
+
+
+Agora o método1() entra na pilha de execução.
+Reparem que o main() ainda não foi finalizado, porém, elen não está em execução agora, 
+apenas o método que está no topo da pilha que estará sendo executado.
+
+A partir do métodos1(), vem a chamada do método2() e todo o bloco de código é 
+jogado dentro da pilha.
+
+Demonstrando:
+
+
+Pilha(Stack)
+
+|           |
+|           |
+|           |
+|           |
+| metodo2() |
+| metodo1() |
+|__main()___|
+
+
+Console:
+Ini do main
+Ini do metodo1
+Ini do metodo2
+1
+2
+3
+4
+5
+Fim do metodo2
+
+
+
+
+Os métodos main() e metodo1() estão separados, pois ainda tem código
+a ser executado, no caso, as linhas do "Fim do metodo1" e "Fim do main".
+
+O metodo2() está sendo executado, pois, está no tipo da pilha, 
+que conseguirá removê-lo assim que terminar de executá-lo, quando 
+não houver mais nada para executar deste metodo.
+
+
+Demonstrando:
+
+
+Pilha(Stack)
+
+|           |
+|           |
+|           |
+|           |
+|           |
+| metodo1() |
+|__main()___|
+
+
+Console:
+Ini do main
+Ini do metodo1
+Ini do metodo2
+1
+2
+3
+4
+5
+Fim do metodo2
+Fim do metodo1
+
+
+Quem está executando agora é o metodo1(). O que sobrou nele é a linha que exibe a 
+mensagem "Fim do metodo1". Depois que ele acaba, a pilha remove e continua com a main(),
+que ficou por último.
+
+
+Demonstrando:
+
+
+Pilha(Stack)
+
+|           |
+|           |
+|           |
+|           |
+|           |
+|           |
+|__main()___|
+
+
+Console:
+Ini do main
+Ini do metodo1
+Ini do metodo2
+1
+2
+3
+4
+5
+Fim do metodo2
+Fim do metodo1
+Fim do main
+
+
+Voltando a main(), é exibida a linha que imprime "Fim do main". Com isso, 
+é finalizado e retirado da pilha.
+
+
+
+Demonstrando:
+
+
+Pilha(Stack)
+
+|           |
+|           |
+|           |
+|           |
+|           |
+|           |
+|___________|
+
+
+Console:
+Ini do main
+Ini do metodo1
+Ini do metodo2
+1
+2
+3
+4
+5
+Fim do metodo2
+Fim do metodo1
+Fim do main
+
+
+Ao acabar os métodos da pilha, o Java entende que o processo foi encerrado.
+
+A pilha existe para saber qual método está sendo executado no momento, ou seja,
+o que está no topo e lembrar quais ainda precisam ser executadas.
+
+
+
+Depuração:
+
+
+Ao debugarmos o programa, será possível ver as mudanças em tempo real, 
+em uma velocidade que podemos acompanhar. Para isso, no eclipse
+com o botão direito em "main() > Debug As > Java Application".
+
+No debug o main() é o primeiro método que está sendo executado.
+Ao colocar um breakpoint e ter acesso ao mesmo, o programa ficará parado
+neste ponto, assim inicia a analise em debug, assim, 
+o java fica aguardando as instruções, para avanço de linha a linha 
+usamos a opção Step Over no eclipse, assim vai indo a execução linha a linha,
+ajudando assim em uma análise mais clinica.
+
+
+
+Exceções: O que são e para que servem?
+
+As exceções são problemas que acontecem na hora de compilar o código. Considerando que existe uma 
+variedade imensa, elas possuem nomes explicativose, as vezes, mostram claramente o motivo de seu surgimento, 
+falicitando a identificação delas.
+
+
+Um exemplo de exceção:
+
+
+public class TesteContas {
+
+    public static void main(String[] args) {
+
+        //instancia para testar exceção!!!!
+        ContaCorrente conta = null;
+        outra.deposita(200.0);
+
+        //instancia da conta corrente
+        ContaCorrente cc = new ContaCorrente(111, 111);
+        cc.deposita(100.0);
+
+        //instancia da conta poupança
+        ContaPoupanca cp = new ContaPoupanca(222, 222);
+        cp.deposita(200.0);
+    }
+}
+
+
+Console: 
+Exception in thread "main" java.lang.NullPointerException
+        at TesteContas.main(TesteContas.java:7)
+        
+        
+        
+É possível verificar que essa referência não foi inicializada corretamente.
+Em alguns casos, não conseguimos enxergar se essa referência foi inicializada 
+de forma correta ou não, o que pode ocasionar a exibição desse problema no console.
+
+Mas, qando isso acontece, o desenvolvedor precisa entender o que houve e o que 
+ele fez de errado. Considerando que a exceção se chama NullPointerException e nós inicializamos a váriavel
+conta como nula, deduzimos que ela faz referência à váriavel. 
+
+
+Outro exemplo: 
+Dentro do main, colocaremos a seguinte operação:
+
+public class TesteContas {
+    public static void main(String[] args) {
+
+        int a = 3;
+        int b = a / 0;
+    }
+}
+
+Aqui não ocorrerá erro de sintaxe, porém, o que vai acontecer?
+
+Console:
+
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+        at TesteContas.main(TesteContas.java:7)
+        
+/ by zero, ou seja, nem o Java consegue dividir algo por zero. Esse tipo de problema
+não deveria acontecer, mas em um ambiente mais complexo, é realmente mais díficil prever.
+
+
+A primeira motivação é que erros e exceções acontecem. Portanto, precisamos saber lidar com elas.
+Mais um exemplo, para praticar:
+
+Na classe Conta, existe um método saca(), que recebe um valor como parâmetro:
+
+
+public boolean saca(double valor) {
+    if(this.saldo >= valor) {
+        this.saldo -= valor;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+Se caso funcionar, devolve true, caso contrário, devolve false. Nessa implementação, partiremos 
+do príncipio de que existe apenas um motivo para que o saque não funcione: saldo insuficiente.
+Considerando um cenário real, existem mais motivos que impedem o saque. 
+Pode ser o limite diário, o horário comercial, o banco pode estar fechado no momento
+e achar que nós poderíamos fraudar ou qualquer outro motivo.
+
+O método retorna somente "Funcionou" ou "Não funcionou", mas queremos que ele nos retorne
+motivos específicos quando não funcionar. Para isso, usamos as exceções:
+
+Na nossa classe Fluxo, vamos verificar como isso funciona junto à pilha:
+
+
+Introduzindo um erro simples no metodo2() para nos ajudar a entender melhor. Declararemos
+uma nova variável e a dividimos por zero:
+
+private static void metodo2() {
+    System.out.println("Ini do metodo2");
+    for(int i = 1; i <= 5; i++) {
+        System.out.println(i);
+        int a = i / 0;
+    }
+    System.out.println("Fim do metodo2");
+}
+
+
+Obviamente, não é uma boa idéia, mas é importante ver como realmente entendemos essa 
+exceção.
+
+Ao executar, no console aparecerá assim:
+
+Ini do main
+Ini do metodo1
+Ini do metodo2
+1
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+        at Fluxo.metodo2(Fluxo.java:19)
+        at Fluxo.metodo1(Fluxo.java:11)
+        at Fluxo.main(Fluxo.java:5)
+        
+
+Logo abaixo de ArithmeticException, conseguimos verificar a pilha de execução.
+Em cima do main, temos o metodo1, acima dele, temos o metodo2.
+
+
+Podemos observar que o Console de Execução com Exceção é semelhante ao normal, até 1. 
+Além da exibição do nome (ArithmeticException) e da mensagem (/ by zero), apó o 1, 
+a execução muda = por causa da exceção - é exibido a pilha de execução.
+
+Assim, podemos perceber que as exceções mudam o fluxo, pois eles fazem parte do controle dele. Mas, 
+porque mudou o fluxo? A partir do momento em que o metodo2() entrou no laço, 
+apareceu a exceção " Não foi possível realizar a divisão por 0 ". 
+
+
+Para acessibilidade: 
+Podemos imaginar a pilha de execução, como um copo que recebe várias 
+camadas, chamadas de métodos. A ordem de surgimento delas está de acordo com o método
+que é chamado. Como todo método é chamado a partir do main(), ele sempre estará no fundo
+do copo, pois é sempre o primeiro.
+
+A main(), por usa vez, chama o método1(), que chamará o método2(). 
+Como o método2() foi o último a ser chamado, ele está no topo do copo. 
+A exceção cai no método2() e como ele não tem nenhum bloco de código
+que possa tratar essa bomba, o método2() sai do copo, e cai na função
+anterior, ou seja, no método1().
+
+Por sua vez, o metodo1() também não possui o bloco de código para tratar essa exceção e 
+por isso, o método sai da pilha, transferindo a exceção para main(), que assim como 
+os anteriores, não possui tratamento para a exceção, sendo obrigada a sair da pilha de execução, que
+será jogada no console.
+
+Resumindo: sabemos que existem exceções e que elas mudam o fluxo. 
+Se soluções não forem encontradas dentro da pilha de execução, 
+elas serão impressas no console.
+
+
+
+Try Catch
+
+Chegamos ao ponto que exceções possuem nomes e elas acontecem
+porque algo deu errado ou inesperado, podendo até mudar o fluxo
+de execução da aplicação.
+
+
+Para tratarmos uma exceção, é preciso sinalizar a máquina virtual 
+que isso pode acontecer, por meio de um código específico (try).
+Assim, ela entenderá que deve tentar executar esse código, entre chaves({})
+e com mais cautela.
+
+Exemplo:
+
+private static void metodo2() {
+    System.out.println("Ini do metodo2");
+    for(int i = 1; i <= 5; i++) {
+        System.out.println(i);
+        try {
+            int a = i / 0;
+        }
+    }
+}
+
+Desta forma, o códiugo ainda nao irá compilar, porque precisamos avisar para a máquina virtual
+qual a exceção pode acontecer. Para isso, utilizaremos um novo bloco de código, 
+por meio de catch, sinalizando que queremos capturar um problema. No caso, ArithmeticException.
+
+try {
+    int a = i / 0;
+} catch (ArithmeticException ex) {
+
+}
+
+Após o nome da exceção, inserimos uma váriavel.
+
+Desta forma, o bloco try sinaliza o código int a = i / 0 como perigoso e em caso de 
+exceção, a capturamos e executaremos no bloco seguinte, por meio de catch. Dentro dele, 
+imprimiremos o seguinte:
+
+try {
+    int a = i / 0;
+} catch (ArithmeticException ex) {
+    System.out.println("ArithmeticException");
+}
+
+
+ao executar desta forma, o resultado será: 
+
+Ini do main
+Ini do metodo1
+Ini do metodo2
+1
+ArithmeticException
+2
+ArithmeticException
+3
+ArithmeticException
+4
+ArithmeticException
+5
+ArithmeticException
+Fim do metodo2
+Fim do metodo1
+Fim do main
+
+Agora podemos notar que temos um bloco de código que sabe resolver a questão.
+A exceção foi capturada por catch e no console, foi impresso System.out.println("ArithmeticException").
+No entanto, logo depois apareceu o 2, ou seja, a VM continuou com o laço e voltou para a execução
+normal. Isso é o que acontece em cada iteração. 
+
+Agora que já sabemos como resolver alguma exceção, utilizando tryCatch, não queremos mais 
+que ele fique dentro do laço, considerando que ele não precisa estar lá. 
+Transferindo este bloco para a hora da chamada do método2(), ficaria assim:
+
+private static void metodo1() {
+    System.out.println("Ini do metodo1");
+    try {
+        metodo2();
+    } catch(ArithmeticException ex) {
+        System.out.println("ArithmeticException");
+    }
+    System.out.println("Fim do metodo1");
+}
+
+
+e a saída seria a seguinte: 
+
+Ini do main
+Ini do metodo1
+Ini do metodo2
+1
+ArithmeticException
+Fim do metodo1
+Fim do main
+
+Podemos observar que houve um erro, na primeira iteração
+do laço dentro do metodo2(). Temos algum código no metodo2() que saiba
+resolver esta questão? Não!
+Desta forma, o java saiu abruptamente da linha int a = i/0 e voltou para a chamada
+do metodo2(), dentro do tryCatch. Repare que na saída não apareceu "Fim do metodo2", 
+porque ele foi descartado e então, voltamos o metodo1(), no qual temos um código para 
+resolver ArithmeticException.
+
+Capturamos a exceção da pilha e imprimimos "ArithmeticException" e logo depois, 
+voltou à execução normal, imprimindo "Fim do metodo1" e "Fim do main".
+
+
+
+
+Variação do Catch
+
+Sabemos que temos uma exceção do tipo ArithmeticException. A variável ex é uma 
+referência e com isso, podemos dizer que exceções também são objetos. Então, podemos 
+usar a referência para chamar algum método público da classe.
+Pegando o método getMessage(), com qual conseguiremos pegar a informação
+apresentada no console, por exemplo, a mensagem / by zero.
+Depois de pegá-la, remos guarda-la em uma String e mostra-lá após
+"ArithmeticException".
+
+public static void main(String[] args) {
+    System.out.println("Ini do main");
+    try {
+        metodo1();
+    } catch(ArithmeticException ex) {
+        String msg = ex.getMessage();
+        System.out.println("ArithmeticException " + msg);
+    }
+    System.out.println("Fim do main");
+}
+
+o trecho acima, resulta, após ser compilado e executado em:
+
+Ini do main
+Ini do metodo1
+Ini do metodo2
+1
+ArithmeticException / by zero
+Fim do main
+
+há muito mais que podemos fazer, da mesma forma que a exceção se lembra 
+da mensagem, ela também se lembra por onde passou e deixou seu rastro.
+Para mostrá-lo, usaremos o método printStackTrace():
+
+Desta forma, entendemos que ex é uma referência e o tipo da referência é o nome da classe da exceção.
+Parte do tratamento dela é saber trabalhar com a referência. 
+Normalmente, não precisamos saber muito sobre ex. 
+basta sabermos que getMessage() é um método importante para descobrir a mensagem original
+e que o printStackTrace() pode ser útil também.
+
+Criando uma classe Conta, com método deposita() vazio.
+Criando uma referência da classe Conta nula, ou seja, ela apontará
+para nenhum objeto. E chamaremos o metodo1() a partir dela.
+
+Outro exemplo de exception:
+
+private static void metodo2() {
+    System.out.println("Ini do metodo2");
+    for(int i = 1; i <= 5; i++) {
+        System.out.println(i);
+        //int a = i / 0;
+        Conta c = null;
+        c.deposita();
+    }
+    System.out.println("Fim do metodo2");
+}
+
+
+Ao executar o codigo, já sabemos que vai dar erro, pois a referência c está nula.
+A saída dessa execução será:
+
+Ini do main
+Ini do metodo1
+Ini do metodo2
+1
+Exception in thread "main" java.lang.NullPointerException
+            at Fluxo.metodo2(Fluxo.java:27)
+            at Fluxo.metodo1(Fluxo.java:17)
+            at Fluxo.main(Fluxo.java:6)
+            
+
+Sabemos que existe um código main capaz de resolver ArithmeticException.
+Entretanto, podemos perceber que não apareceu o "Fim do main" na saída,
+como no exemplo anterior, ou seja, não conseguimos pegar a exception
+por meio de um catch(). Isso aconteceu porque fizemos um catch específico,
+que funciona somente para ArithmeticException e o nosso problema se 
+chama NullPointerException.
+
+Para resolver é simples, basta mudar o nome da exceção dentro do catch.      
+mas sabemos que o código pode criar outros tipos de exceções, além 
+de ArithmeticException, podemos manter a exceção desse catch e criar um segundo
+para a exceção é: NullPointerException();
+
+public static void main(String[] args) {
+	    System.out.println("Ini do main");
+	    try {
+	        metodo1();
+	    } catch(ArithmeticException ex) {
+	        //String msg = ex.getMessage();
+	        //System.out.println("ArithmeticException " + msg);
+	        ex.printStackTrace();
+	    } catch (NullPointerException ex) {
+	    	String msg = ex.getMessage();
+	    	System.out.println("NullPointerException ---> " + msg);
+	    	//ex.printStackTrace();
+		}
+	    System.out.println("Fim do main");
+	}
+
+qualquer exceção, tem em si o método getMessage();
+
+A mensagem pelo getMessage() foi null, ou seja, segundo bloco de catch foi
+chamado, então, podemos ter quantos blocos quisermos, desde que eles sejam
+específicos o suficiente.
+
+A partir do Java 1.7, chegou uma versão variada do catch. Em vez de 
+repetir vários blocos de catch, podemos colocar um pipe, que sgnifica "ou"
+
+
+Pontos importantes e estudados no Capítulo 02:
+ - O que são exceções, para que servem e porquê utilizá-las.
+ - Como analisar o rastro de exceções, ou stacktrace.
+ - Tratar exceções com os blocos try-catch.
+ - Manipular uma exceção lançada dentro do bloco catch.
+ - Tratar múltiplas exceções com mais de um bloco catch ou 
+ usando Multi-Catch utilizando o pipe (|).
+ 
+ 
+ 
+ Capítulo 03 -> 01 Revisão
+ 
+ o Java organiza a execução de uma pilha, que sempre 
+ começa com o método main() e pode crescer e diminuir 
+ de tamanho, dependendo da quantidade de métodos que forem executados.
+
+
+Assim como várias outras linguagens, o Java utiliza essa 
+pilha de execução, que é importante para entendermos o "rastro" 
+da exceção. O nosso principal objetivo é entender que quando 
+acontece a exceção, ela se lembra por quais métodos ela passou.
+
+Alguns eventos excepcionais e imprevistos podem aparecer em 
+nossa aplicação. Portanto, precisamos saber lidar com isso, 
+entendendo a exceção, suas mensagens e o seu rastro.
+
+Para o Fluxo:
+
+Vimos que exceção muda o fluxo. Se o método não for capaz de 
+tratá-la, o fluxo de execução sai abruptamente dele e vai 
+para o próximo, até encontrar algum método que saiba tratá-la.
+
+para o Try Catch:
+
+Para lidar com essa Exception e voltar para uma execução normal, 
+podemos utilizar o try-catch. Com o try, alertamos a máquina virtual, 
+e com o catch, definimos qual exceção pode acontecer.
+
+A referência ex declarada no bloco catch, é um objeto onde podemos 
+chamar métodos como o getMessage() para receber a mensagem, 
+e o printStackTrace() para mostrar o rastro da pilha.
+
+
+
+Lançando exceções
+
+Criando nossas próprias exceções, anteriormente, vimos que elas podem ocorrer 
+quando algo inesperado acontece no código, por exemplo, uma divisão por zero ou uma
+referência nula.
+
+Mas, sabendo que essas exceções não deveriam acontecer. 
+Deveríamos programar de forma correta, 
+evitando-as, todavia, existem casos em que as exceções nos ajudarão muito.
+
+Na classe Fluxo, retornaremos ao try Catch e usaremos a referência ex
+para chamar algum método que se comunique com o objeto. Se ex é uma 
+referência, então NullPointerException é um tipo baseado em uma classe.
+
+Criaremos um objeto da classe ArithmetcException e o guardaremos na referência
+exception:
+
+private static void metodo2() {
+   System.out.println("Ini do metodo2");
+
+   ArithmeticException exception = new ArithmeticException();
+
+   System.out.println("Fim do metodo2");
+ 
+}
+
+Se criarmos um objeto da classe ArithmeticException, também criamos uma exceção?
+Não, nós somente criarmos o objeto e ainda falta um passo para isso.
+
+A referência exception aponta para ArithmeticExceptionm que está no HEAP (memória
+de objetos), desta forma, precisamos falar para o Java pegar esse objeto, transformar
+em uma exceção e "jogar" na pilha. 
+O verbo "jogar", em inglês é throw, então, vamos "jogar" o objeto a partir da 
+referência exception:
+
+private static void metodo2() {
+    System.out.println("Ini do metodo2");
+    ArithmeticException exception = new ArithmeticException();
+    throw exception ;
+    System.out.println("Fim do metodo2");
+}
+
+O Java reconhece que quando jogamos uma esceção, saímos abruptamente do código.
+Se isso acontecer, não é possível executar a linha que mostra "Fim do método2". 
+Por isso, esta linha ficará comentada somente para compilar e demonstrar 
+a execução:
+
+private static void metodo2() {
+    System.out.println("Ini do metodo2");
+    System.out.println("-------------------------");
+    
+    //criação de objeto
+    ArithmeticException exception = new ArithmeticException();
+    throw exception;
+    
+    //System.out.println("-------------------------");
+    //System.out.println("Fim do metodo2");
+}
+
+
+e ao executar, obtemos a seguinte saída no console:
+
+Ini do main
+Ini do metodo1
+Ini do metodo2
+Exception null
+java.lang.ArithmeticException
+        at Fluxo.metodo2(Fluxo.java:24)
+        at Fluxo.metodo1(Fluxo.java:17)
+        at Fluxo.main(Fluxo.java:6)
+Fim do main
+
+Podemos analisar que não foi impresso o "Fim do metodo1" e por esse motivo, 
+sabemos que saímos abruptamente do método. Quando main recebe ArithmeticException, 
+pega essa exceção e mostra a mensagem, alterando agora a mensagem, 
+retornará "deu errado":
+
+private static void metodo2() {
+    System.out.println("Ini do metodo2");
+    System.out.println("-------------------------");
+    
+    //criação de objeto
+    ArithmeticException exception = new ArithmeticException("deu errado");
+    throw exception;
+    
+    //System.out.println("-------------------------");
+    //System.out.println("Fim do metodo2");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

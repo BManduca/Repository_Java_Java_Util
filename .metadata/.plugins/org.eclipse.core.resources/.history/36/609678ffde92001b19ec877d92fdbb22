@@ -1,0 +1,18 @@
+package br.com.bytebank.banco.test;
+
+public class TesteOutrasWrappers {
+
+	public static void main(String[] args) {
+		
+		Integer idadeRef = Integer.valueOf(29); //Autoboxing
+		System.out.println(idadeRef.intValue()); //Unboxing
+		
+		//Double doubleRef = 3.2;
+		Double doubleRef = Double.valueOf(3.2);
+		System.out.println(doubleRef.doubleValue());
+		
+		
+		
+	}
+
+}

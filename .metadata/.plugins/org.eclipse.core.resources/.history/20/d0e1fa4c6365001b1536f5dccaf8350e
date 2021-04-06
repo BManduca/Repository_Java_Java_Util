@@ -1,0 +1,26 @@
+
+public class ControleBonificacao {
+
+	private double total;
+	
+	
+	public void registra(Gerente g) {
+		double boni = g.getBonificacao();
+		this.total = this.total + boni;
+	}
+	
+	public void registra(Funcionario f) {
+		double boni = f.getBonificacao();
+		this.total = this.total + boni;
+	}
+	
+	public void registra(EditorVideo e) {
+		double boni = e.getBonificacao();
+		this.total = this.total + boni;
+	}
+	
+	public double getTotal() {
+		return total;
+	}
+	
+}

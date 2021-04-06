@@ -1,0 +1,531 @@
+Java Polimorfismo: Entenda herança e interfaces.
+
+Aula 06 - Capítulo 01
+
+sem a questão da herança, foi identificado alguns problemas em trabalhar com todas as funcionalidades em uma 
+única classe.
+
+nesse projeto, temos diferentes tipos de funcionários, cada um com usas especificações, ou seja, 
+termos cada uma delas em um só lugar tornará o programa muito díficil de manter.
+
+
+
+se pararmos para analisar, o gerente também é um funcionário, desta forma, 
+para o código em si, ficar menos verboso e mais clean, podemos 
+inidcar ao Java que o Gerente irá herdar tudo de Funcionário
+
+Na sintaxe do Java, a herança é expressada pela palavra extends...
+
+Ex: public class Gerente extends Funcionario {
+		
+	}
+
+	
+Como Gerente é um Funcionário, podemos utilizar, de forma direta, o método setNome - que origina da 
+classe Funcionario. O mesmo vale para Cpf e Salario.
+
+
+public class TesteGerente {
+	
+	public static void main(String[] args) {
+		
+		Gerente g1 = new Gerente();
+		g1.setNome("Rafael");
+		g1.setCpf("02589645726");
+		g1.setSalario(5500.00);
+		
+		
+		System.out.println(g1.getNome());
+		System.out.println(g1.getCpf());
+		System.out.println(g1.getSalario());
+		
+		boolean autenticou = g1.autentica(2222);
+		
+		/*
+			o método autenticou foi criado 
+			ao executar esse codigo pela primeira vez, resultará em false...
+			pois, a senha padrão do Gerente é 0, já que não inicializamos este atributo com nenhum valor
+			em particular.
+			 
+		*/
+		System.out.println(autenticou);
+		
+				
+	}
+	
+}
+
+
+O gerente conta também com um método autentica, que é particular e não consta em Funcionário....
+esse método foi criado na classe Gerente
+
+Inicialmente o valor booelan volsa false, pois,  o padrão do Gerente é 0, já que inicializamos 
+este atributo com nenhum valor em particular.
+
+
+para efetuar um teste, foi criado um método setSanha() na classe Gerente..
+
+ao retornar a classe TesteGerente, chamando o método setSenha()...
+
+é possível observar que no próprio menu do Eclipse surge algumas sugestões, 
+que enquanto todos os outros otiginam de Funcionario, este método
+vem da classe Gerente.
+
+
+Nessa aula começamos a falar sobre a herança e aprendemos:
+
+-> quais problemas a herança pode resolver
+-> como usar herança no Java através de palavra chave extends
+-> ao herdar, a classe filha ganha todas as características (atributos) e todas as funcionalidades (métodos) da classe mãe
+-> conhecemos o primeiro benefício da herança: Reutilização do código
+
+
+
+
+Aula 01 - Capítulo 02 - Herança no diagrama de classes
+
+Somente relembrando, foi criada uma classe extra, para respresentar o gerente. Nela, temos todo o código específico para representá-lo, 
+ou seja, uma senha, que é atribuído a mais em relação ao Funcionário, e dois métodos, sem contar com o Bonificação, que ganhará especificação, 
+em relação ao que já existe para o Funcionário.
+
+
+Para não repetirmos código, utilizamos conceitos de herança, representado pela palavra extends:
+
+public class Gerente extends Funcionario {
+	
+	//codigo omitido
+	
+}
+
+
+com o trecho de código acima, estamos querendo dizer que o Gerente possui os mesmos atributos e métodos que o Funcionario.
+
+
+É costume chamar esta classe Funcionario de classe mãe ou classe pai ou simplesmente, que ela está acima de outra com a qual estivermos 
+trabalhando.
+
+no caso, a classe Gerente seria a classe filha.
+
+ 
+
+agora com toda essa parte de nomenclatura...
+
+Vamos criar o primeiro gerente
+
+Gerente g1 = new Gerente();
+
+O que acontece interiormente, é a criação de um objeto, com atributos baseados na hierarquia estabelecida.
+
+
+
+Representando objeto Gerente
+
+nome = null
+
+cpf = null
+
+salario = 0.0
+
+senha = 0
+
+
+
+Ou seja, se pararmos para entender, todos os atributos de Funcionario, mais o seu especifico, que é a senha, foram apresentados.
+É esta a ideia de herança.
+
+Ao utilizar a referencia g1, é possível chamarmos todos os métodos da hierarquia, ou seja, não só aquelas definidas na própria 
+classe Gerente, como também aqueles presentes na classe Funcionario.
+
+Ex.:
+
+g1.setNome("Brunno");
+
+o método setNome, so funciona, pois, existe um atributo nome, que por 'de baixo dos panos'... 
+
+ficara assim:
+
+
+Representando objeto Gerente
+
+nome = Brunno
+
+cpf = null
+
+salario = 0.0
+
+senha = 0
+
+
+
+
+Aula 02 - Capítulo 02 - Reescrita de métodos
+
+
+so relembrando o objetivo de getBonificacao(), era implementarmos na classe Funcionario, um método que calculasse uma 
+bonificação de modo padrão para todos os funcionários, entretanto, foi verificado que não condiz com a realidade de negócio da empresa, 
+uma vez que o gerente terá uma bonificação diferenciada dos demais funcionários da empresa.
+
+
+porém, se olharmos dentro da classe Funcionario, veremos que ao tentar acessar o atributoi salario, não será possivel,
+pois, o mesmo é private, onde, este termo é um modificador de visibilidade, que permite que esta informação seja vísivel somente dentro
+da classe em si.
+
+Acontece que ao utilizar o método getBonificacao() na classe Gerente estamos querendo acessá-lá externamente, por isso o
+erro de compilação apareceu.
+
+uma possível solução, seria trocar este modificador de private para public, porém, isso não seria uma boa prática de 
+programação.
+
+Para solucionar essa questão, veremos que há outro modificador que está entre o private e o public, ou seja, ele nem é visivel
+somente em determinada classe, e tampouco pode ser visualizado por todos. Este modificador se chama protected.
+
+
+Desta forma, as informações ali contidas serão públicas apenas para si e para os filhos, as demais classes, não. 
+
+public class Funcionario {
+
+	private String nome;
+	private String cpf;
+	protected double salario;
+
+	//codigo omitido
+
+}
+
+se caso fazer tanto teste para somente funcionario e tambem para o gerente, ambos a bonificação passará
+a funcionar, através da ajuda do terceiro modificador de visibilidades que passamos a utilizar, no caso, o protected, 
+que fica entre o private e o public, ainda não foi possivel visualizar , isto de forma clara poque nossas classes
+ainda não estão bem subdivididas, por enquanto, elas estão armazenadas em um único pacote.
+
+ o protected foi feito para liberar o acesso ao atributo para os filhos, e deixar privado para todas as outras classes. Ou seja, quem não é um Funcionário
+ não verá o salário.
+ 
+ 
+ 
+ Olhando outro ponto agora, como programador, ao utilizarmos o this., no caso, do this.salario, no código, somos levados a olhar para os 
+ atributos, pois, pensamentos que o atributo salario, automaticamente pertence a esta classe.
+ 
+ o this, além de guardar a referência para mexermos nos atributos do objeto, para desenvolvedor, significa que o atributo deve estar definido
+ nesta classe. Entretanto, neste caso o salario não esta definido na classe Gerente, e sim na classe mão ou super classe, Funcionario.
+ 
+ para mostrarmos que o atributo salario, vem da super classe, há outra palavra reservada que pode ser utilizada, que é a super:
+ 
+ public double getBonificacao() {
+ 	return super.salario;
+ }
+
+
+sendo assim, o desenvolvedor, saberá que é preciso subir na hierarquia para encontrar este atributo,k já que ele 
+não está definido nesta classe. 
+Se colocarmos super em algo definido dentro da própria classe, o Eclipse apontará um erro de compilação, ja que neste caso
+ele procurará na classe acima e não encontrará o atributo.
+
+porém, na classe Funcionário, temos nosso método getBonificação() que é público, devolve um double, e não recebe parâmetros:
+
+//código omitido
+
+public double getBonificacao() {
+	return this.salario * 0.1;
+}
+
+//codigo omitido
+
+
+Está prática, é chamado de assinatura de método. Se olharmos para a classe Gerente, veremos que lá temos a mesma assinatura do método, 
+o que chamamos de reescrita.
+
+
+Já entramos mais a fundo na herança. Aprendemos:
+
+ - que classe mãe é chamada de super ou base class
+ - que a classe filha também é chamada de sub class
+ - como aumentar a visibilidade de um membro (atributo, método) através do protected
+ - como acessar ou chamar um membro (atributo, método) através do super
+ - como redefinir um método através da sobrescrita
+
+
+
+Aula 01 - Capítulo 03 - Reescrita de métodos
+
+
+Até este ponto, podemos ver uma importante parte do conceito de herança, que tratou da reutilização de código. 
+Como uma boa prática de programação, não queremos repetir código e para isso, podemos estender a classe, utilizando 
+extends -> Gerente estende a classe Funcionario
+
+Isso significa também dizer que Gerente herdou todos os atributos e características da classe Funcionário.
+
+para exemplificar, a próxima parte, criaremos uma nova classe:
+
+public class TesteReferencias {
+	
+	public static void main(String[] args) {
+	
+		Gerente g1 = new Gerente(); //criação de um novo gerente.
+	
+	}
+
+}
+
+
+desta forma, podemos chamar qualquer um cod métodos definidos, como o setNome() e podemos recuperar
+o nome com g1.getNome();
+
+
+
+public class TesteReferencias {
+	
+	public static void main(String[] args) {
+	
+		Gerente g1 = new Gerente(); //criação de um novo gerente.
+		
+		g1.setNome("Marcos");
+		String nome = g1.getNome();
+		
+		System.out.println(nome);
+		
+	}
+
+}
+
+ao executar, funcionará normalmente, imprimindo o nome do Gerente.
+
+Até o momento, quando criamos um novo objeto, utilizamos o lado direito com o new, para então chamarmos o construtor
+com o nome da classe, por exemplo, no caso acima, nem Gerente().
+Enquanto isso, no lado esquerdo temos o tipo da variável, seguido pelo nome, no caso Gerente g1.
+
+Entretanto, como todo Gerente é também um funcionário, é possível declarar a variável de um tipo mais genérico,
+ou seja, do tipo Funcionario:
+
+public class TesteReferencias {
+	
+	public static void main(String[] args) {
+	
+		Funcionario g1 = new Gerente(); //criação de um novo gerente.
+		
+		g1.setNome("Marcos");
+		String nome = g1.getNome();
+		
+		System.out.println(nome);
+		
+	}
+
+}
+
+
+Agora a variável é to tipo Funcionario, ela não é mais do tipo Gerente, e sim do tipo mais genérico.Nosso código continua compilando e se executarmos
+novamente, teremos o mesmo resultado...
+
+será que o contrário tambem funciona?
+Resposta: Não!!!
+
+pois todo Gerente é um funcionário, mas nem todo funcionário é um Gerente.
+
+
+se colocarmos ao contrario: 
+
+public class TesteReferencias {
+	
+	public static void main(String[] args) {
+	
+		Gerente g1 = new Funcioario(); //criação de um novo gerente.
+		
+		//codigo omitido
+		
+		g1.autentica(2222);
+		
+		
+	}
+
+}
+
+
+
+O compilador vai indicar que isso não funciona, mas porque? 
+Se criamos um objeto do tipo Gerente?
+Para o compilador, isso não importa. 
+
+O que ele faz é analisar o tipo da referência, ou seja, g1 que é do tipo Funcionario.
+
+Como esta classe não tem o método autentica, o compilador indica a presença de um erro.
+
+O que pode variar, é o tipo da referência, "aquilo" que está localizado à esquerda do nome do objeto, no caso
+é o Funcionario,mas como vimos, poderíamos ter definido como Gerente também, que funcionária.
+
+A isso, damos o nome de polimorfismo, temos um mesmo objeto do tipo Gerente, mas há duas formas possíveis de chegarmos 
+a este objeto, dois tipos diferentes de referência. 
+
+
+
+Aula 02 - Capítulo 03 - Aplicando polimorfismo
+
+anteriormente falavamos sobre o polimorfismo, onde vimos que se trata de um objeto que pode ser referenciado por uma referência do mesmo tipo, ou genérica.
+Ou seja, se temos um objeto Gerente(), a referência pode ser tanto do tipo Gerente, quanto do tipo Funcionario.
+
+
+para fazer o controle de bonificação, teremos uma classe chamada ControleBonificacao. Ela terá um método público chamado registra:
+
+public class ControleBonificacao {
+
+        public void registra() {
+
+        }
+}
+
+
+
+nesta classe queremos tambem retornar a soma de todas as bonificações, por isso criaremos um método chamado getTotal():
+
+public class ControleBonificacao {
+
+        public void registra() {
+
+        }
+        
+        public double getTotal() {
+        	return total;
+        }
+}
+
+
+retornamos na classe TesteReferencia e imprimimos o total:
+
+public class TesteReferencias {
+
+        public static void main(String[] args) {
+
+                Gerente g1 = new Gerente();
+                g1.setNome("Brunno");
+                g1.setSalario(3000.0);
+
+                ControleBonificacao controle = new ControleBonificacao();
+                controle.registra(g1);
+
+                System.out.println("Bonificação Geral: " + controle.getTotal());
+
+        }
+}
+
+
+ao executar, ira aparecer somente o total, indicando que funcionou. Como temos somente um gerente, 
+so aparecerá a bonificação do Gerente.
+
+
+
+em seguida se quisermos criar mais um funcionario, do tipo Funcionario, com salário de R$2000,00 e que também será registrado e
+tambem mais um funcionario, sue será o Editor de video, ele tambem estende a classe Funcionario e sua bonificação é o 
+valor padrão acrescido de  R$100,00
+
+so criarmos a classe: 
+
+public class EditorVideo extends Funcionario {
+
+        public double getBonificacao() {
+                return super.getBonificacao() + 100;
+
+        }
+}
+
+
+Para que possamos registralos, não será preciso criar outro metodo dentro da classe ControleBonoficacao, pois, 
+queremos ter apenas um método que sirva para os funcionários de forma geral:
+
+
+public class ControleBonificacao {
+
+	private double total;
+	
+	public void registra(Funcionario f) {
+		double boni = f.getBonificacao();
+		this.total = this.total + boni;
+	}
+
+	public double getTotal() {
+		return total;
+	}
+	
+}
+
+
+Aula 06 - Capítulo 03 - Resumo herança
+
+ 
+
+Existem duas características principais da herança:
+ - reutilização de código
+ - Polimorfismo
+ 
+ 
+ 
+ Reutilização de código, é conceituada como extensão da classe, com a palavra extends, isso faz com que a classe filha 
+ herde automaticamente todos os dados, atributos e funcionalidades dos métodos
+ 
+ no meu código, a Gerente é baseada em todos os atributos da hierarquia.
+ 
+ quando criamos um gerente, ele terá uma senha, porque isso está definido dentro da classe Gerente. Além disso, 
+ ele também terá um nome, um cpf e um salário, todos estes são atributos da classe Funcionario. O mesmo vale para os métodos, 
+ como getters e setters e getBonificacao(), incluindo os métodos específicos de Gerente que terão preferência em relação
+ aos mais genéricos.
+ 
+ ja o Polimorfismo é mais complexo
+ Por exemplo a hierarquia da classe Funcionario, em que ela é mão das classes Gerente e EditorVideo.
+ 
+ Quando criamos um Gerente, temos um objeto do tipo Gerente:
+ 
+ Gerente gerente = new Gerente();
+ 
+ o objeto em si nunca muda o tipo. Uma vez que ele é criado com o tipo Gerente, terá sempre este tipo. O mesmo vale para o EditorVideo:
+ 
+ EditorVideo ev = new EditorVideo();
+ 
+ no caso acima, o tipo será sempre EditorVideo. O que pode variar somente é o tipo da referência -> Isto é polimorfismo!
+ 
+ antes o tipo da referência era sempre igual ao tipo do objeto, com o polimorfismo, aprendemos que a referência pode ser de um 
+ tipo mais genérico. No nosso exemplo, esta classe mais genérica é Funcionario:
+ 
+ Funcionario gerente = new Gerente();
+ Funcionario editor = new EditorVideo();
+ 
+ isso so funciona, porque todo Gerente e EditorVideo são Funcionários...
+ 
+ 
+ Ao termos uma referência genérica, do tipo Funcionário, que aponta para objetos de tipos diferentes. É possível comunicar com os 
+ tipos diferentes de objetos, apartir de uma mesma referência genérica. Daí surge a vantagem do polimorfismo, como a seguir:
+ 
+ 
+ public class ControleBonificacao {
+ 	private double soma;
+ 	
+ 	public void registra(Funcionario f){
+ 		double boni = f.getBonificacao();
+ 		this.soma = this.soma + boni;
+ 	}
+ 	
+ 	public double getSoma() {
+ 		return soma;
+ 	}
+ 	
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
