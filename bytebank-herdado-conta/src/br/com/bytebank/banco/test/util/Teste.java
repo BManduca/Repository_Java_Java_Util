@@ -1,7 +1,6 @@
 package br.com.bytebank.banco.test.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -46,27 +45,42 @@ public class Teste {
             lista.add(cc4);
             
             System.out.println("-----------------------------");
-            System.out.println("Antes do comparator: ");
-            for (Conta conta : lista) {
-                    System.out.println(conta);
-            }
+            
+            //criação de um objeto para encapsular a execução do método compare
+            //Function Objects
+            //NumeroDaContaComparator2 comparator = new NumeroDaContaComparator2();
+            //lista.sort(new NumeroDaContaComparator2());
+            
+          //criando por debaixo dos panos um obj compativel
+            //com o compare
+            
+            //classe anonima
+            lista.sort(new Comparator<Conta>() {
+            	
+	            	//classe sem atributos
+	            	
+	            	
+	            	//metodo compara não usa this e so encapsula o trecho de codigo presente 
+            		//abaixo
+	                @Override
+	                public int compare(Conta c1, Conta c2) {
+	                    return Integer.compare(c1.getNumero(), c2.getNumero());
+	                }
+	            }
+            );
+            
+            Comparator<Conta> comp = new Comparator<Conta>() {
 
-//            NumeroDaContaComparator comparator = new NumeroDaContaComparator();
-//            TitularDaContaComparator titularComparator = new TitularDaContaComparator();
-            
-            lista.sort(new TitularDaContaComparator());
-            
-            Collections.sort(lista, new NumeroDaContaComparator());
-//            Collections.sort(lista); //ordenando a lista
-            
-//            Collections.reverse(lista); // invertendo a ordem da lista
-//            Collections.shuffle(lista); // embaralhando a lista
-            Collections.rotate(lista, 5);
-            
-            
-            System.out.println("-----------------------------");
-            System.out.println("Depois do comparator: ");
+            	@Override
+            	public int compare(Conta c1, Conta c2) {
+            		
+            		String nomeC1 = c1.getTitular().getNome();
+            		String nomeC2 = c2.getTitular().getNome();
+            		return nomeC1.compareTo(nomeC2);
+            	}
 
+            };
+            
             for (Conta conta : lista) {
             	System.out.println(conta + ", " + conta.getTitular().getNome());
             }
@@ -75,40 +89,6 @@ public class Teste {
     }
 
 }
-
-class TitularDaContaComparator implements Comparator<Conta> {
-
-	@Override
-	public int compare(Conta c1, Conta c2) {
-		
-		String nomeC1 = c1.getTitular().getNome();
-		String nomeC2 = c2.getTitular().getNome();
-		return nomeC1.compareTo(nomeC2);
-	}
-
-}
-
-class NumeroDaContaComparator implements Comparator<Conta> {
-
-    @Override
-    public int compare(Conta c1, Conta c2) {
-
-            /*if(c1.getNumero() < c2.getNumero()) {
-                return -1;
-            }
-
-            if(c1.getNumero() > c2.getNumero()) {
-                return 1;
-            }*/
-
-        return Integer.compare(c1.getNumero(), c2.getNumero());
-    }
-}
-
-
-
-
-
 
 
 
