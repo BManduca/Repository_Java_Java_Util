@@ -26,7 +26,7 @@ public class TesteArrayList {
 		 * */
 		
 		List<Conta> lista = new ArrayList<Conta>();
-		ArrayList<String> nomes = new ArrayList<String>();
+		//ArrayList<String> nomes = new ArrayList<String>();
 
         Conta cc = new ContaCorrente(22, 11);
         lista.add(cc);

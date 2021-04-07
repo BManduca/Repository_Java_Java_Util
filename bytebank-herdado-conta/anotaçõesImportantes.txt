@@ -6973,5 +6973,409 @@ Capítulo 06 - Aula 01 Autoboxing e Unboxing
 	objeto que só encapsula uma função/método/procedimento -> Functionm Object
 	
 	
+	Lambdas:
+	
+	Os métodos atuais onde foi utilizado as classes anonimas, mesmo sendo mais compactos, 
+	possuem uma sintaxe difícil. Ao analisarmos, percebemos que os métodos possuem dois 
+	parâmetros, no segundo caso há uma implementação, e por fim, ambos nos retornam algum valor:
+	
+	
+	//Código omitido
+
+	public class Teste {
+	
+	//Código omitido
+	
+	        lista.sort((Conta c1, Conta c2) {
+	                        return Integer.compare(c1.getNumero(), c2.getNumero());
+	                   }
+	                );
+	
+	                Comparator<Conta> comp = new Comparator<Conta>() {
+	
+	                        @Override
+	                        public int compare(Conta c1, Conta c2) {
+	                            String nomeC1 = c1.getTitular().getNome();
+	                            String nomeC2 = c2.getTitular().getNome();
+	                            return nomeC1.compareTo(nomeC2);
+	                        }
+	                };
+	
+	        for (Conta conta : lista) {
+	                System.out.println(conta + ", " + conta.getTitular().getNome());
+	        }
+	}
+	
+	Para melhorar o código, estarei apagando no método sort(), a partir do construtor
+	new até o nome do método compare, podemos notar que a classe não compila. Precisamos 
+	declarar a existência das lambdas expressamente, isso é feito por meio do símbolo 
+	de seta (->), formado por uma hífen e um sinal de "maior que":
+	
+	
+	//Código omitido
+
+	public class Teste {
+	
+	//Código omitido
+	
+	        lista.sort((Conta c1, Conta c2) -> {
+	                        return Integer.compare(c1.getNumero(), c2.getNumero());
+	                   }
+	                );
+	
+	                Comparator<Conta> comp = (Conta c1, Conta c2) -> {
+	                            String nomeC1 = c1.getTitular().getNome();
+	                            String nomeC2 = c2.getTitular().getNome();
+	                            return nomeC1.compareTo(nomeC2);
+	                        }
+	                };
+	
+	        for (Conta conta : lista) {
+	                System.out.println(conta + ", " + conta.getTitular().getNome());
+	        }
+	}
+	
+	
+	
+	Internamente, o Java gera uma classe que implementa a interface Comparator, 
+	e que contém o método compare().
+	
+	O código está compilando, e visualmente, é mais sucinto. O foco é nos trechos cuja 
+	escrita é necessária, sem necessidade de nomes de métodos e classes que estavam em excesso.
+	
+	para deixar o código mais enxuto, podemos aplicar mais alguns procedimentos:
+	
+	não há necessidade do return, tampouco das chaves ({}), no método sort(), 
+	com isso, temos de lembrar de remover o ponto e vírgula que vem sempre ao final destas:
+	
+	
+	//Código omitido
+
+	public class Teste {
+	
+	//Código omitido
+	
+	        lista.sort(
+	                        (Conta c1, Conta c2) -> Integer.compare(c1.getNumero(), c2.getNumero())
+	        );
+	
+	                Comparator<Conta> comp = (Conta c1, Conta c2) -> {
+	                            String nomeC1 = c1.getTitular().getNome();
+	                            String nomeC2 = c2.getTitular().getNome();
+	                            return nomeC1.compareTo(nomeC2);
+	                };
+	
+	        for (Conta conta : lista) {
+	                System.out.println(conta + ", " + conta.getTitular().getNome());
+	        }
+	}
+	
+	
+	Como o Java entende que estamos comparando duas contas, não há necessidade de 
+	indicarmos o tipo Conta, antes de c1 e c2:
+	
+	//Código omitido
+
+	public class Teste {
+	
+	//Código omitido
+	
+	        lista.sort( (c1, c2) -> Integer.compare(c1.getNumero(), c2.getNumero()) );
+	
+	                Comparator<Conta> comp = (Conta c1, Conta c2) -> {
+	                            String nomeC1 = c1.getTitular().getNome();
+	                            String nomeC2 = c2.getTitular().getNome();
+	                            return nomeC1.compareTo(nomeC2);
+	                };
+	
+	        for (Conta conta : lista) {
+	                System.out.println(conta + ", " + conta.getTitular().getNome());
+	        }
+	}
+	
+	Esta sintaxe nos indica que, para as contas c1 e c2, teremos em retorno a comparação na forma de um inteiro. 
+	Ela nos priva da burocracia de classes e escrita excessiva, mas demanda uma leitura mais cuidadosa do código.
+
+	Assim, temos duas variações de lambdas, primeiro no método sort(), em que ela é bastante mínima, com a menor 
+	quantidade possível de linhas de código, e em seguida, onde temos a variável comp, temos a definição do tipo 
+	Conta, e a utilização das chaves ({}), com o returndefinido. Ambas são válidas.
+
+	Assim como o sort(), é possível que a lista faça sua própria iteração, para isso, utilizamos 
+	o lista.forEach(action):
+	
+	//Código omitido
+
+	public class Teste {
+	
+	//Código omitido
+	
+	        lista.sort( (c1, c2) -> Integer.compare(c1.getNumero(), c2.getNumero()) );
+	
+	        Comparator<Conta> comp = (Conta c1, Conta c2) -> {
+	                 String nomeC1 = c1.getTitular().getNome();
+	                 String nomeC2 = c2.getTitular().getNome();
+	                 return nomeC1.compareTo(nomeC2);
+	                };
+	
+	                lista.forEach(action);
+	
+	        for (Conta conta : lista) {
+	                System.out.println(conta + ", " + conta.getTitular().getNome());
+	        }
+	}
+	
+	Dentro dos parênteses do método forEach, podemos verificar que ele não recebe um Comparator, e sim um Consumer. 
+	Assim, abriremos esta interface, e notaremos que ela possui um método accept():
+	
+	//Código omitido
+
+	public interface Consumer<T> {
+	
+	//Código omitido
+	
+	        void accept(T t);
+	
+	//Restante do código omitido
+	
+	Assim, definiremos uma classe anônima que implementa esta interface. 
+	Lembrando que ela também utiliza os generics:
+	
+	//Código omitido
+
+	public class Teste {
+	
+	//Código omitido
+	
+	        lista.sort( (c1, c2) -> Integer.compare(c1.getNumero(), c2.getNumero()) );
+	
+	        Comparator<Conta> comp = (Conta c1, Conta c2) -> {
+	                 String nomeC1 = c1.getTitular().getNome();
+	                 String nomeC2 = c2.getTitular().getNome();
+	                 return nomeC1.compareTo(nomeC2);
+	                };
+	
+	                lista.forEach(new Consumer<Conta>() {
+	                });
+	
+	        for (Conta conta : lista) {
+	                System.out.println(conta + ", " + conta.getTitular().getNome());
+	        }
+	}
+	
+	
+	Entretanto, o compilador sinaliza que ainda precisamos implementar o método. O Eclipse nos 
+	oferece a opção de adiciona-los, ao clicarmos no ícone de lâmpada, ao lado esquerdo da 
+	linha em que o erro é apontado, com isso, temos o seguinte código gerado automaticamente:
+	
+	
+	//Código omitido
+
+	public class Teste {
+	
+	//Código omitido
+	
+	        lista.sort( (c1, c2) -> Integer.compare(c1.getNumero(), c2.getNumero()) );
+	
+	        Comparator<Conta> comp = (Conta c1, Conta c2) -> {
+	                 String nomeC1 = c1.getTitular().getNome();
+	                 String nomeC2 = c2.getTitular().getNome();
+	                 return nomeC1.compareTo(nomeC2);
+	                };
+	
+	                lista.forEach(new Consumer<Conta>() {
+	
+	                        @Override
+	                        public void accept(Conta c1) {
+	                            //TODO Auto-generated method stub
+	                        }
+	                });
+	
+	        for (Conta conta : lista) {
+	                System.out.println(conta + ", " + conta.getTitular().getNome());
+	        }
+	}
+	
+	Em seguida, substituiremos o código que foi gerado automaticamente, por aquele que 
+	havíamos inserido em nosso laço for:
+	
+	//Código omitido
+
+	public class Teste {
+	
+	//Código omitido
+	
+	        lista.sort( (c1, c2) -> Integer.compare(c1.getNumero(), c2.getNumero()) );
+	
+	        Comparator<Conta> comp = (Conta c1, Conta c2) -> {
+	                 String nomeC1 = c1.getTitular().getNome();
+	                 String nomeC2 = c2.getTitular().getNome();
+	                 return nomeC1.compareTo(nomeC2);
+	                };
+	
+	                lista.forEach(new Consumer<Conta>() {
+	
+	                        @Override
+	                        public void accept(Conta c1) {
+	                            System.out.println(conta + ", " + conta.getTitular().getNome());
+	                        }
+	                });
+	
+	        for (Conta conta : lista) {
+	                System.out.println(conta + ", " + conta.getTitular().getNome());
+	        }
+	}
+	
+	Como podemos notar, este novo código é maior que o anterior, por isso, simplificaremos 
+	sua escrita. O primeiro passo será apagar tudo que é inserido no parâmetro, 
+	até a entrada (Conta conta):
+	
+	//Código omitido
+
+	public class Teste {
+	
+	//Código omitido
+	
+	        lista.sort( (c1, c2) -> Integer.compare(c1.getNumero(), c2.getNumero()) );
+	
+	        Comparator<Conta> comp = (Conta c1, Conta c2) -> {
+	                 String nomeC1 = c1.getTitular().getNome();
+	                 String nomeC2 = c2.getTitular().getNome();
+	                 return nomeC1.compareTo(nomeC2);
+	                };
+	
+	                lista.forEach((Conta conta) {
+	                            System.out.println(conta + ", " + conta.getTitular().getNome());
+	                        }
+	                });
+	
+	        for (Conta conta : lista) {
+	                System.out.println(conta + ", " + conta.getTitular().getNome());
+	        }
+	}
+	
+	
+	Precisamos indicar que se trata de uma lambda, fazemos isso utilizando o símbolo ->
+	e Assim como anteriormente, não há necessidade de fazermos referência ao tipo Conta. 
+	Tampouco há necessidade para as chaves ({}), já que estamos trabalhando com uma 
+	linha de código somente:
+	
+	//Código omitido
+
+	public class Teste {
+	
+	//Código omitido
+	
+	        lista.sort( (c1, c2) -> Integer.compare(c1.getNumero(), c2.getNumero()) );
+	
+	        Comparator<Conta> comp = (Conta c1, Conta c2) -> {
+	                 String nomeC1 = c1.getTitular().getNome();
+	                 String nomeC2 = c2.getTitular().getNome();
+	                 return nomeC1.compareTo(nomeC2);
+	                };
+	
+	                lista.forEach( (conta) -> System.out.println(conta + ", " + conta.getTitular().getNome()));
+	
+	        for (Conta conta : lista) {
+	                System.out.println(conta + ", " + conta.getTitular().getNome());
+	        }
+	}
+	
+	Quem faz o laço é a própria lista, para cada elemento que for uma conta, 
+	será aplicado o System.out.println() que definimos. Podemos apagar o laço 
+	for antigo:
+	
+	
+	//Código omitido
+
+	public class Teste {
+	
+	//Código omitido
+	
+	        lista.sort( (c1, c2) -> Integer.compare(c1.getNumero(), c2.getNumero()) );
+	
+	        Comparator<Conta> comp = (Conta c1, Conta c2) -> {
+	                 String nomeC1 = c1.getTitular().getNome();
+	                 String nomeC2 = c2.getTitular().getNome();
+	                 return nomeC1.compareTo(nomeC2);
+	                };
+	
+	                lista.forEach( (conta) -> System.out.println(conta + ", " + conta.getTitular().getNome()));
+	}
+	
+	
+	
+	Exemplo:
+	
+	List<String> nomes = new ArrayList<>();
+	nomes.add("Super Mario");
+	nomes.add("Yoshi"); 
+	nomes.add("Donkey Kong"); 
+	
+	for(int i = 0; i < nomes.size(); i++) {
+	    System.out.println(nomes.get(i));
+	}
+	
+	
+	
+	este for, iterando as posições, pode ser convertido para isto:
+	
+	nomes.forEach((nome) -> System.out.println(nome));
+	
+	Bem mais simples e enxuto, somente precisa se atentar a escrita e tudo 
+	funcionará perfeitamente.
+	
+	
+	uma pergunta: Como posso acessar (iterar) todas essas implementações de 
+	maneira uniforme sem saber os detalhes de cada implementação? 
+	A resposta está na "caixa de padrões de projeto" e se chama Iterator.
+	
+	Uma Iterator é um objeto que possui no mínimo dois métodos: hasNext()e next(). 
+	Ou seja, você pode usá-lo para perguntar se existe um próximo elemento e 
+	pedir o próximo elemento. A notícia boa é que isso funciona com TODAS as 
+	implementações e aí a grande vantagem.
+	
+	
+	código exemplo:
+	
+	List<String> nomes = new ArrayList<>();
+	nomes.add("Super Mario");
+	nomes.add("Yoshi"); 
+	nomes.add("Donkey Kong"); 
+	
+	Iterator<String> it = nomes.iterator();
+	
+	while(it.hasNext()) {
+	  System.out.println(it.next());
+	}
+	
+	
+	Iterar com filas, conjuntos ou mapas. Veja o uso do Iterator através de um conjunto:
+	
+	Set<String> nomes = new HashSet<>();
+	nomes.add("Super Mario");
+	nomes.add("Yoshi"); 
+	nomes.add("Donkey Kong"); 
+	
+	Iterator<String> it = nomes.iterator();
+	
+	while(it.hasNext()) {
+	  System.out.println(it.next());
+	}
+	
+	
+	curso para aprender mais sobre Iterator:
+	https://cursos.alura.com.br/course/java-collections
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	

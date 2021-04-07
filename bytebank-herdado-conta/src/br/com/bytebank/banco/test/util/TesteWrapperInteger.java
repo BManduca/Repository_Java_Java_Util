@@ -8,7 +8,7 @@ public class TesteWrapperInteger {
 
 	public static void main(String[] args) {
 		
-		int idade = 29; // classe Integer
+		//int idade = 29; // classe Integer
 		
 		//Integer idadeRef = new Integer(29); // -> constructor deprecated
 		

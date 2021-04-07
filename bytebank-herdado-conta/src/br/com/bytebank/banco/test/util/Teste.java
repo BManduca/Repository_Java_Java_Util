@@ -3,6 +3,7 @@ package br.com.bytebank.banco.test.util;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 
 import br.com.bytebank.banco.modelo.Cliente;
 import br.com.bytebank.banco.modelo.Conta;
@@ -44,47 +45,28 @@ public class Teste {
             lista.add(cc3);
             lista.add(cc4);
             
-            System.out.println("-----------------------------");
+            System.out.println("----------------------------------------------------------");
             
-            //criação de um objeto para encapsular a execução do método compare
-            //Function Objects
-            //NumeroDaContaComparator2 comparator = new NumeroDaContaComparator2();
-            //lista.sort(new NumeroDaContaComparator2());
+            // "->" sintaxe dos lambdas
+            // foi definido a entrada e a seta defini o codigo está associado com a entrada 
+            lista.sort((c1, c2) -> Integer.compare(c1.getNumero(), c2.getNumero()));
+            System.out.println("Ordenando pelo número da conta: ");
+            lista.forEach((conta) -> System.out.println(conta + ", " + conta.getTitular().getNome()));
+            System.out.println("----------------------------------------------------------");
+            System.out.println();
             
-          //criando por debaixo dos panos um obj compativel
-            //com o compare
-            
-            //classe anonima
-            lista.sort(new Comparator<Conta>() {
-            	
-	            	//classe sem atributos
-	            	
-	            	
-	            	//metodo compara não usa this e so encapsula o trecho de codigo presente 
-            		//abaixo
-	                @Override
-	                public int compare(Conta c1, Conta c2) {
-	                    return Integer.compare(c1.getNumero(), c2.getNumero());
-	                }
-	            }
-            );
-            
-            Comparator<Conta> comp = new Comparator<Conta>() {
-
-            	@Override
-            	public int compare(Conta c1, Conta c2) {
+            Comparator<Conta> comp = 
+            		(Conta c1, Conta c2) -> {
+            			String nomeC1 = c1.getTitular().getNome();
+            			String nomeC2 = c2.getTitular().getNome();
+            			return nomeC1.compareTo(nomeC2);
+            		};
             		
-            		String nomeC1 = c1.getTitular().getNome();
-            		String nomeC2 = c2.getTitular().getNome();
-            		return nomeC1.compareTo(nomeC2);
-            	}
-
-            };
-            
-            for (Conta conta : lista) {
-            	System.out.println(conta + ", " + conta.getTitular().getNome());
-            }
-            System.out.println("-----------------------------");
+            lista.sort(comp);
+            System.out.println("----------------------------------------------------------");
+            System.out.println("Ordenando pelo nome do titular: ");
+            lista.forEach((conta) -> System.out.println(conta + ", " + conta.getTitular().getNome()));
+            System.out.println("----------------------------------------------------------");
             
     }
 
